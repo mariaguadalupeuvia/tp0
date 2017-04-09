@@ -4,9 +4,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import com.sun.jersey.api.client.ClientResponse;
+
+import utils.ErrorServidorNoEncontradoException;
+
 import static org.junit.Assert.*;
 /**
- * Lector de notas MODEL VIEW?
+ * Lector de notas MODEL
  * 
  * @author mariaguadalupeuvia
  *  
@@ -22,18 +25,27 @@ public class JsonRequester
 		this.requester = new RequestService();	
 	}
 
-	public JSONObject getJson(String path) throws Exception 
+	public JSONObject getJson(String path) //throws  Exception  //NullPointerException//
 	{
-		ClientResponse response = this.requester.getResource(path);
-		assertEquals(response.getStatus(), 200);
-		String jsonString = response.getEntity(String.class);
-		return (JSONObject) JSONValue.parse(jsonString);
+		try
+		{
+			ClientResponse response = this.requester.getResource(path);
+			//assertEquals(response.getStatus(), 200);
+			String jsonString = response.getEntity(String.class);
+			return (JSONObject) JSONValue.parse(jsonString);
+		}
+		catch(ErrorServidorNoEncontradoException e)
+		{
+			
+		}
+		return null;
+		//catch()
 	}
 	
-	public JSONArray getJsonArray(String path, String colectionName) throws Exception 
+	public JSONArray getJsonArray(String path, String colectionName) //throws  Exception  //NullPointerException
 	{
 		ClientResponse response = this.requester.getResource(path);
-		assertEquals(response.getStatus(), 200);
+		//assertEquals(response.getStatus(), 200);
 		String jsonString = response.getEntity(String.class);
 		JSONObject json = (JSONObject) JSONValue.parse(jsonString);
 		//System.out.println(jsonString);

@@ -31,11 +31,23 @@ public class MainWindow extends SimpleWindow<StudentViewModel>
 		this.setTitle("Lector de notas");
 		mainPanel.setLayout(new VerticalLayout());
 		this.getModelObject().consultarAlumno();
-	
-		GroupPanel grpAlumno = new GroupPanel(mainPanel);
-		grpAlumno.setTitle("__ALUMNA:");
-		grpAlumno.setLayout(new HorizontalLayout());
+
+		Panel unPanel = new Panel(mainPanel);
+		unPanel.setLayout(new HorizontalLayout());
 		
+		//estetica
+		Panel panelColor = new Panel(unPanel);
+		panelColor.setLayout(new VerticalLayout());
+		new Label(panelColor).setText("(º-º)").setBackground(Paleta.colorBajo());
+		new Label(panelColor).setText("___").setBackground(Paleta.colorMedioBajo());
+		new Label(panelColor).setText("___").setBackground(Paleta.colorMedio());
+		new Label(panelColor).setText("___").setBackground(Paleta.colorMedioAlto());
+		new Label(panelColor).setText("___").setBackground(Paleta.colorAlto());
+		
+		//controles 
+		GroupPanel grpAlumno = new GroupPanel(unPanel);
+		grpAlumno.setTitle("__ALUMNO:");
+		grpAlumno.setLayout(new HorizontalLayout());
 		Panel panel1 = new Panel(grpAlumno);
 		panel1.setLayout(new VerticalLayout());
 		Panel panel2 = new Panel(grpAlumno);
@@ -45,6 +57,7 @@ public class MainWindow extends SimpleWindow<StudentViewModel>
 		new Label(panel1).setText("Apellido                .");
 		new Label(panel1).setText("Usuario de Github");
 		new Label(panel1).setText("Codigo                  .");
+		
 		new Label(panel2).setBackground(Paleta.colorNoEditable()).bindValueToProperty("first_name");
 		new Label(panel2).setBackground(Paleta.colorNoEditable()).bindValueToProperty("last_name");
 		new Label(panel2).setBackground(Paleta.colorNoEditable()).bindValueToProperty("github_user");

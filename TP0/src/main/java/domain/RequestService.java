@@ -5,6 +5,8 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import utils.Config;
+import utils.ErrorServidorNoEncontradoException;
+import utils.Mensaje;
 /**
  * Lector de notas MODEL
  * 
@@ -27,10 +29,18 @@ public class RequestService
 	
 	public ClientResponse getResource(String path) 
 	{
-		ClientResponse response = this.client.resource(RESOURCE).path(path)
-				.header("Authorization", "Bearer " + token).accept(MediaType.APPLICATION_JSON)
-				.get(ClientResponse.class);
-		return response;
+		try
+		{
+			ClientResponse response = this.client.resource(RESOURCE).path(path)
+					.header("Authorization", "Bearer " + token).accept(MediaType.APPLICATION_JSON)
+					.get(ClientResponse.class);
+			return response;
+		}
+		catch(NullPointerException e)
+		{
+			Mensaje.show(0, "\nNo se pudo conectar con el servidor '" + RESOURCE + "',\n\ncompruebe su acceso a internet, si el error persiste contacte con un admin \n\n");
+			throw new ErrorServidorNoEncontradoException();
+		}
 	}
 	
 	public ClientResponse putResource(String path, String jsonString) 

@@ -1,5 +1,6 @@
 package ui;
 
+import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.GroupPanel;
 import org.uqbar.arena.widgets.Label;
@@ -39,6 +40,18 @@ public class StudentUpdateWindow extends Dialog<StudentViewModel>
 		new Label(grpUpdate).setText("Usuario de Github (*)");
 		new TextBox(grpUpdate).setBackground(Paleta.colorEditable()).bindValueToProperty("github_user");
 
-		new Button(grpUpdate).setCaption("Actualizar alumna").onClick(() -> this.getModelObject().actualizarAlumno());
+		new Button(grpUpdate).setCaption("Actualizar alumno").onClick(() -> this.getModelObject().actualizarAlumno());
+		
+		//estetica
+		Panel unPanel = new Panel(mainPanel);
+		unPanel.setLayout(new HorizontalLayout());
+		Panel panelColor = new Panel(unPanel);
+		panelColor.setLayout(new HorizontalLayout());
+		new Label(panelColor).setText("_(º-º)_").setBackground(Paleta.colorBajo());
+		new Label(panelColor).setText("_____").setBackground(Paleta.colorMedioBajo());
+		new Label(panelColor).setText("____").setBackground(Paleta.colorMedio());
+		new Label(panelColor).setText("___").setBackground(Paleta.colorMedioAlto());
+		new Label(panelColor).setText("__").setBackground(Paleta.colorAlto());
+		
 	}
 }
