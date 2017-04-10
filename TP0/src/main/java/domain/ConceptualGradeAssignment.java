@@ -13,11 +13,13 @@ import utils.Paleta;
 
 public class ConceptualGradeAssignment extends Assignment 
 {
-	@Override
-	protected void setColorDeEstado() 
+	public void validarNota(String grade) 
 	{
-		String grade = getGrade();
-		
+		validarNotaYCambiarColor(grade);
+	}
+	
+     private void validarNotaYCambiarColor(String grade)
+	{
 		switch(grade)
 		{
 			case "M":
@@ -30,7 +32,9 @@ public class ConceptualGradeAssignment extends Assignment
 				setState(Paleta.colorBien());
 				break;
 			default:
+				setGrade(grade + "(error)");
 				throw new ErrorDatosServidorException("Error en los datos recibidos del servidor: la nota recibida no corresponde con la escala actual: M, R o B");
 		}
+		setGrade(grade);
 	}
 }

@@ -12,6 +12,8 @@ import domain.Assignment;
 import domain.ConceptualGradeAssignment;
 import domain.JsonRequester;
 import domain.NumericGradeAssignment;
+import utils.ErrorRecursoNoEncontradoException;
+import utils.Mensaje;
 
 /**
  * Lector de notas VIEW MODEL
@@ -29,11 +31,19 @@ public class AssignmentViewModel
 	
 	public void consultarTareas() 
 	{
-		JSONArray jsonAsignmentsArray = assignmentRequester.getJsonArray("student/assignments", "assignments");
-		if (jsonAsignmentsArray != null) 
-		{ 
-			setAssignments(jsonAsignmentsArray);
-		}  
+		try 
+		{
+			JSONArray jsonAsignmentsArray = assignmentRequester.getJsonArray("student/assignments", "assignments");
+			if (jsonAsignmentsArray != null) 
+			{ 
+				setAssignments(jsonAsignmentsArray);
+			} 
+		} 
+		catch (ErrorRecursoNoEncontradoException e) 
+		{
+			Mensaje.show(1, "\nSe produjo un error al intentar consultar las tareas del alumno,\n\ncompruebe su acceso a internet y vuelva a intentarlo, si el error persiste contacte con un admin \n\n");
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -57,8 +67,7 @@ public class AssignmentViewModel
 			   assign.setDescription((String) unaTarea.get("description"));
 		       assign.setId((Long) unaTarea.get("id"));
 		       assign.setTitle((String) unaTarea.get("title"));
-		       
-			   assign.setGrade((String) unaNota.get("grade"));
+		       assign.validarNota((String) unaNota.get("grade"));//esta puede tirar excepcion si la nota es invalida
 		       assign.setCreated_at((String) unaNota.get("created_at"));
 		       assign.setUpdated_at((String) unaNota.get("updated_at"));
 		 	       

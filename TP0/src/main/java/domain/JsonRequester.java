@@ -5,7 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import com.sun.jersey.api.client.ClientResponse;
 
-import utils.ErrorServidorNoEncontradoException;
+import utils.ErrorRecursoNoEncontradoException;
 
 import static org.junit.Assert.*;
 /**
@@ -25,24 +25,14 @@ public class JsonRequester
 		this.requester = new RequestService();	
 	}
 
-	public JSONObject getJson(String path) //throws  Exception  //NullPointerException//
+	public JSONObject getJson(String path) throws ErrorRecursoNoEncontradoException
 	{
-		try
-		{
-			ClientResponse response = this.requester.getResource(path);
-			//assertEquals(response.getStatus(), 200);
-			String jsonString = response.getEntity(String.class);
-			return (JSONObject) JSONValue.parse(jsonString);
-		}
-		catch(ErrorServidorNoEncontradoException e)
-		{
-			
-		}
-		return null;
-		//catch()
+		ClientResponse response = this.requester.getResource(path);
+		String jsonString = response.getEntity(String.class);
+		return (JSONObject) JSONValue.parse(jsonString);
 	}
 	
-	public JSONArray getJsonArray(String path, String colectionName) //throws  Exception  //NullPointerException
+	public JSONArray getJsonArray(String path, String colectionName) throws ErrorRecursoNoEncontradoException
 	{
 		ClientResponse response = this.requester.getResource(path);
 		//assertEquals(response.getStatus(), 200);
@@ -52,7 +42,7 @@ public class JsonRequester
 		return (JSONArray)json.get(colectionName);
 	}
 	
-	public JSONObject putJson(String path, String resource) throws Exception 
+	public JSONObject putJson(String path, String resource) throws ErrorRecursoNoEncontradoException
 	{
 		ClientResponse response = this.requester.putResource(path, resource);
 		assertEquals(response.getStatus(), 201);

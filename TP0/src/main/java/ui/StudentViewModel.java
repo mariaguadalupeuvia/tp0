@@ -2,6 +2,7 @@ package ui;
 
 import org.uqbar.commons.utils.Observable;
 import domain.JsonRequester;
+import utils.ErrorRecursoNoEncontradoException;
 import utils.Mensaje;
 import org.json.simple.JSONObject;
 
@@ -36,9 +37,9 @@ public class StudentViewModel
 			setAtributos(studentRequester.putJson("student", jsonString));
 			Mensaje.show(2, "Se actualizaron los datos del alumno con exito");
 		} 
-		catch (Exception e) 
+		catch (ErrorRecursoNoEncontradoException e) 
 		{
-			Mensaje.show(1, "Se produjo un error al intentar actualizar los datos del alumno");
+			Mensaje.show(0, "\nSe produjo un error al intentar actualizar los datos del alumno,\n\ncompruebe su acceso a internet y vuelva a intentarlo, si el error persiste contacte con un admin \n\n");
 			e.printStackTrace();
 		}
 	}
@@ -49,14 +50,9 @@ public class StudentViewModel
 		{
 			setAtributos(studentRequester.getJson("student"));
 		} 
-//		catch(UnknownHostException e)
-//		{
-//			Mensaje.show(2, "No se pudo conectar con el servidor remoto notitas.herokuapp.com, compruebe su acceso a internet");
-//			e.printStackTrace();
-//		}
-		catch (Exception e) 
+		catch (ErrorRecursoNoEncontradoException e) 
 		{
-			Mensaje.show(2, "No se obtuvo una respuesta satisfactoria al consultar los datos del alumno");
+			Mensaje.show(1, "\nSe produjo un error al intentar consultar los datos del alumno,\n\ncompruebe su acceso a internet y vuelva a intentarlo, si el error persiste contacte con un admin \n\n");
 			e.printStackTrace();
 		}
 	}
@@ -78,12 +74,12 @@ public class StudentViewModel
 			}
 			else
 			{
-				Mensaje.show(2, "Completar nombre y apellido unicamente con letras");
+				Mensaje.show(1, "Completar nombre y apellido unicamente con letras");
 			}
 		}
 		else
 		{
-			Mensaje.show(2, "Completar todos los campos obligatorios indicados con (*)");
+			Mensaje.show(0, "Completar todos los campos obligatorios indicados con (*)");
 		}
 		return false;
 	}

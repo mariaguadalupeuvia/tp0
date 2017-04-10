@@ -2,10 +2,8 @@ package domain;
 
 import java.awt.Color;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.uqbar.commons.utils.Observable;
-
-import utils.ErrorDatosServidorException;
-import utils.Mensaje;
 import utils.Paleta;
 
 /**
@@ -29,28 +27,17 @@ public class Assignment
 	private Color state;
 	private Color fontColor;
 	
-	public void validarNota(String grade) 
+	public void validarNota(String grade)  
 	{
-		setGrade(grade);
-		try 
-		{
-			setColorDeEstado();
-		} 
-		catch (ErrorDatosServidorException e)
-		{
-			setFontColor(Paleta.colorFontErrorDatosServidor());
-			setState(Paleta.colorErrorDatosServidor());
-			Mensaje.show(1, e.getMessage());
-			e.printStackTrace();
-		}	
+		throw new NotImplementedException("En construccion. La operacion solicitada no ha sido implementada todavia");
 	}
 	
-	protected  void setColorDeEstado() throws ErrorDatosServidorException
+	protected void cambiarColorDatosInvalidos()
 	{
-		throw new UnsupportedOperationException("Operacion no implementada");
+		setFontColor(Paleta.colorFontErrorDatosServidor());
+		setState(Paleta.colorErrorDatosServidor());
 	}
-	
-	
+
 	//Accessors----------------------------------------
 	public String getTitle() 
 	{

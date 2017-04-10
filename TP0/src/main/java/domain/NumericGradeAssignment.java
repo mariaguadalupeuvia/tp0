@@ -13,20 +13,29 @@ import utils.Paleta;
 public class NumericGradeAssignment extends Assignment 
 {
 	@Override
-	protected void setColorDeEstado()
+	public void validarNota(String grade) 
 	{
-		Integer grade = Integer.parseInt(getGrade());
+		Integer nota = Integer.parseInt(getGrade());
 		
-		if (grade < 0) 
+		if (nota < 0) 
 		{
+			setGrade(grade + "(error)");
+			cambiarColorDatosInvalidos();
 			throw new ErrorDatosServidorException("Error en los datos recibidos del servidor: no se permiten notas negativas");
 		}
-			
-		if (grade > 10) 
+		if (nota > 10) 
 		{
+			setGrade(grade + "(error)");
+			cambiarColorDatosInvalidos();
 			throw new ErrorDatosServidorException("Error en los datos recibidos del servidor: no se permiten notas superiores a 10");
 		}
 		
+		setGrade(grade);
+		setColorDeEstado(nota);	
+	}
+	
+	private void setColorDeEstado(Integer grade)
+	{
 		if(grade < 6)//desaprobado
 		{
 			setState(Paleta.colorMal());
